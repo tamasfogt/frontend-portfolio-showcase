@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import redirectOnSignIn from "../redirect-on-sign-in/redirect-on-sign-in.component";
 
@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import SignInSchema from "./sign-in.schema.js";
 import { signInStart } from "../../../redux/user/user-saga.actions";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,9 @@ const SignIn = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { isValid, errors },
   } = useForm({
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(SignInSchema),
   });
   const onSubmit = (data) => {
@@ -48,12 +49,22 @@ const SignIn = () => {
             errors={errors}
           />
           <button
+            disabled={!isValid ? "true" : null}
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            className="disabled:opacity-50 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
             Sign in
           </button>
         </form>
+        <div className="text-center">
+          Don't have an account yet?
+          <Link
+            to="/registration"
+            className="w-full mt-2 px-4 py-2 text-indigo-600 text-base font-medium  hover:text-indigo-500"
+          >
+            Sign up
+          </Link>
+        </div>
       </div>
     </div>
   );

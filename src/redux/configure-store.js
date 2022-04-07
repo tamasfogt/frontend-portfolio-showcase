@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 import logger from "redux-logger";
 import userReducer from "./user/user.slice";
-import lotsReducer from "./lots/lots.slice";
 import stocksReducer from "./stocks/stocks.slice";
 import toasterReducer from "./toaster/toaster.slice";
 
@@ -34,7 +33,6 @@ const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     user: userReducer,
-    lots: lotsReducer,
     stocks: stocksReducer,
     toaster: toasterReducer,
   })

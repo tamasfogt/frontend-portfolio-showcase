@@ -8,6 +8,8 @@ import MenuItem from "../../menu-item/menu-item.component";
 import { ReactComponent as BarsSvg } from "../../../assets/bars.svg";
 import { ReactComponent as CloseSvg } from "../../../assets/close.svg";
 
+import { Link } from "react-router-dom";
+
 const Header = () => {
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -27,7 +29,7 @@ const Header = () => {
                 className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
               >
                 <span className="sr-only">Close menu</span>
-                <CloseSvg></CloseSvg>
+                <CloseSvg height="20"></CloseSvg>
               </button>
             </div>
           </div>
@@ -38,16 +40,32 @@ const Header = () => {
               <div className="mb-3 text-center font-semibold">
                 Hello {currentUser?.name}
               </div>
-              <div onClick={() => dispatch(signOutStart())}>Sign out</div>
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  dispatch(signOutStart());
+                  setMenuVisible(false);
+                }}
+              >
+                Sign out
+              </div>
             </div>
           ) : (
             <div>
-              <button className="w-full px-4 py-2 rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+              <Link
+                onClick={() => setMenuVisible(false)}
+                className="w-full px-4 py-2 rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                to="/sign-in"
+              >
                 Sign in
-              </button>
-              <button className="w-full mt-2 px-4 py-2 text-indigo-600 text-base font-medium  hover:text-indigo-500">
+              </Link>
+              <Link
+                onClick={() => setMenuVisible(false)}
+                to="/registration"
+                className="w-full mt-2 px-4 py-2 text-indigo-600 text-base font-medium  hover:text-indigo-500"
+              >
                 Registration
-              </button>
+              </Link>
             </div>
           )}
         </div>
@@ -72,7 +90,7 @@ const Header = () => {
                 aria-expanded="false"
               >
                 <span className="sr-only">Open menu</span>
-                <BarsSvg></BarsSvg>
+                <BarsSvg height="20"></BarsSvg>
               </button>
             </div>
 
@@ -85,7 +103,7 @@ const Header = () => {
                   <div onClick={() => dispatch(signOutStart())}>Sign out</div>
                 </div>
               ) : (
-                "Please Sign in "
+                <MenuItem link="/sign-in">Please Sign in </MenuItem>
               )}
             </div>
             {menuVisible ? mobileMenu : <></>}
